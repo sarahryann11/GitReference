@@ -1,0 +1,6 @@
+{
+  "command":"clone",
+  "example":"git clone ssh://user@domain.com/repo.git",
+  "explanation":"Clone an existing repository",
+  "section":"Create"
+}
