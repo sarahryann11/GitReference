@@ -41,11 +41,11 @@ public class CommandAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        View rowView = mInflator.inflate(android.R.layout.list_item, viewGroup, false);
+        View rowView = mInflator.inflate(R.layout.list_item, viewGroup, false);
 
-        TextView commandView = rowView.findViewById(android.R.id.text1);
-        TextView exampleView = rowView.findViewById(android.R.id.text2);
-        TextView explanationView = rowView.findViewById(android.R.id.text2);
+        TextView commandView = rowView.findViewById(R.id.command);
+        TextView exampleView = rowView.findViewById(R.id.example);
+        TextView explanationView = rowView.findViewById(R.id.explanation);
 
         Command command = (Command) getItem(position);
         commandView.setText(command.getCommand());
