@@ -34,14 +34,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listView);
-        gitReferenceList = new ArrayList<>();
-        String json = loadJSONFromAsset();
 
-        JSONObject obj = new JSONObject(json);
+        ArrayList<Command> commands = loadJSONFromAsset(this);
+        //String json = loadJSONFromAsset();
+
+        //JSONObject obj = new JSONObject(json);
+
+        CommandAdapter adapter = new CommandAdapter(this, commands);
+        listView.setAdapter(adapter);
     }
 
-    public String loadJSONFromAsset(Context context) {
-        String json = null;
+    public ArrayList<Command> loadJSONFromAsset(Context context) {
+        ArrayList json = null;
         try {
             InputStream is = context.getAssets().open("gitReference.json");
 
@@ -52,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
             is.read(buffer);
 
             is.close();
-
-            json = new String(buffer, "UTF-8");
-
 
         } catch (IOException ex) {
             ex.printStackTrace();
