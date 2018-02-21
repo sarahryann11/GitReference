@@ -33,10 +33,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Bundle bundle = getIntent().getExtras();
+        String jsonData = bundle.getString("gitReference");
+
         listView = (ListView) findViewById(R.id.listView);
 
-        ArrayList<Command> commands = loadJSONFromAsset(this);
+        //ArrayList<Command> commands = loadJSONFromAsset(this);
         //String json = loadJSONFromAsset();
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(jsonData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Command> commands = new ArrayList<>();
+
+        for(int i=0;i<jsonArray.length();i++)
+        {
+            JSONObject json_data = jsonArray.getJSONObject(i);
+            commands.id =  json_data.getString("id_key");
+            commands.name = json_data.getString("name_key");
+            c.thumb = json_data.getString("thumb_key");
+            imgnfo.info = json_data.getString("info_key");
+            myArray.add(new image_data());
+        }
+
 
         //JSONObject obj = new JSONObject(json);
 
@@ -45,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<Command> loadJSONFromAsset(Context context) {
-        ArrayList json = null;
+        ArrayList<Command> json = new ArrayList<>();
         try {
             InputStream is = context.getAssets().open("gitReference.json");
 
