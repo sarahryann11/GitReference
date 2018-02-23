@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
 
-    ArrayList<HashMap<String,String>> gitReferenceList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +48,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ArrayList<Command> commands = new ArrayList<>();
-
-        for(int i=0;i<jsonArray.length();i++)
-        {
-            JSONObject json_data = jsonArray.getJSONObject(i);
-            commands.id =  json_data.getString("id_key");
-            commands.name = json_data.getString("name_key");
-            c.thumb = json_data.getString("thumb_key");
-            imgnfo.info = json_data.getString("info_key");
-            myArray.add(new image_data());
-        }
 
 
         //JSONObject obj = new JSONObject(json);
@@ -87,21 +76,56 @@ public class MainActivity extends AppCompatActivity {
         return json;
     }
 
-    /*
-    JSONArray jsonObj = new JSONArray(jsonStr);
+    public ArrayList<String> populateData(String jsonFileName)
+    {
+        ArrayList<String> returnList = new ArrayList<>();
 
-for (int i = 0; i < jsonObj.length(); i++) {
-    JSONObject m = jsonObj.getJSONObject(i);
-    String command = m.getString(TAG_COMMAND);
-    String name = m.getString(TAG_NAME);
-    String price = m.getString(TAG_PRICE);
+        String jsonString = ProcessData(jsonFileName);
+        Log.i("JSON", jsonString);
 
-    HashMap < String, String > contact = new HashMap < String, String > ();
-    contact.put(TAG_CHANGE, change);
-    contact.put(TAG_NAME, name);
-    contact.put(TAG_PRICE, price);
+        ArrayList<Command> references = JsonUtils.populateGitReferences(jsonString);
 
-    contactList.add(contact);
-}
-     */
+        for(Command g:references)
+        {
+            returnList.add(g.getCommand());
+        }
+
+        return returnList;
+    }
+
+    public String ProcessData(String filename)
+    {
+        String jsonString = "";
+        boolean isFilePresent = JsonUtils.isFilePresent(this, filename);
+
+        if(isFilePresent)
+        {
+            jsonString = JsonUtils.read(this, filename);
+            Log.i("JSON", "JSON was present");
+        }
+
+        else
+        {
+            Log.i("JSON", "JSON was not present. Creating...");
+            InputStream is = null;
+            try {
+                is = getApplicationContext().getAssets().open("gitReference.json");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            jsonString = JsonUtils.parseJsonToString(is);
+            boolean isFileCreated = JsonUtils.create(this, filename, jsonString);
+
+            if(isFileCreated)
+                Log.i("JSON", "Created the filesystem JSON");
+            else
+            {
+                Log.e("JSON", "Error creating filesystem JSON");
+            }
+        }
+
+        return jsonString;
+    }
+
 }

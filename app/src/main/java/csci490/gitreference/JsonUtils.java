@@ -16,6 +16,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+import static android.os.ParcelFileDescriptor.MODE_APPEND;
+
 /**
  * Created by Sarah on 2/21/2018.
  */
@@ -86,7 +89,7 @@ public class JsonUtils {
 
     public static boolean create(Context context, String fileName, String jsonString){
         try {
-            FileOutputStream fos = fileName.read(context, fileName);// TODO: Your code goes here
+            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE); // TODO: Your code goes here
             if (jsonString != null) {
                 fos.write(jsonString.getBytes());
             }
