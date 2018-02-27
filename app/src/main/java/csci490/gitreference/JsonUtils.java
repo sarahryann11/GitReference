@@ -51,11 +51,17 @@ public class JsonUtils {
             // Extract json objects from JsonArray and store into ArrayList as class objects
             for(int i=0;i<jArray.length();i++){
                 JSONObject json_data = jArray.getJSONObject(i);
-                Command gitReference = new Command();
-                gitReference.setCommand(json_data.getString("command"));
+                Command commands = new Command();
+                commands.setCommand(json_data.getString("command"));
+                Log.i("JSON", "Adding: " + commands.getCommand());
+                commands.setExample(json_data.getString("example"));
+                Log.i("JSON", "Adding: " + commands.getExample());
+                commands.setExplanation(json_data.getString("explanation"));
+                Log.i("JSON", "Adding: " + commands.getExplanation());
+                commands.setSection(json_data.getString("section"));
+                Log.i("JSON", "Adding: " + commands.getSection());
 
-                Log.i("JSON", "Adding: " + gitReference.getCommand());
-                data.add(gitReference);
+                data.add(commands);
             }
 
         } catch (Exception ex) {

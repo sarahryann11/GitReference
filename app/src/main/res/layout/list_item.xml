@@ -7,16 +7,19 @@
         android:id="@+id/command"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="left" />
     <TextView
         android:id="@+id/example"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="left" />
     <TextView
         android:id="@+id/explanation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="left" />
 
 </LinearLayout>

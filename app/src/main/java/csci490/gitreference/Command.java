@@ -16,7 +16,7 @@ public class Command {
         return command;
     }
 
-    public void setCommand(String courseName) {
+    public void setCommand(String command) {
         this.command = command;
     }
 
@@ -24,7 +24,7 @@ public class Command {
         return example;
     }
 
-    public void setExample(String professor) {
+    public void setExample(String example) {
         this.example = example;
     }
 
