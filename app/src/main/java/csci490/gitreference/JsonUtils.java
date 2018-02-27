@@ -16,15 +16,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-import static android.os.ParcelFileDescriptor.MODE_APPEND;
-
 /**
  * Created by Sarah on 2/21/2018.
  */
 
 public class JsonUtils {
-    String fileName = "gitReference";
 
     public static String parseJsonToString(InputStream is) {
         String json = null;
@@ -106,7 +102,19 @@ public class JsonUtils {
     public static boolean append(Context context, String fileName, String jsonString) {
         // TODO: Your code here
 
-        return false;
+        try{
+            FileOutputStream fos = new FileOutputStream(fileName);
+            byte[] strBytes = jsonString.getBytes();
+            fos.write(strBytes);
+
+            fos.close();
+
+        } catch (FileNotFoundException fnfe){
+            return false;
+        } catch (IOException ioe) {
+            return false;
+        }
+        return true;
     }
 
     public static boolean isFilePresent(Context context, String fileName) {

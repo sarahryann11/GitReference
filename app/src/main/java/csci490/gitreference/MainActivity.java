@@ -26,61 +26,34 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
+    InputStream is;
+    CommandAdapter adapter;
+    ArrayList<Command> commands;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Bundle bundle = getIntent().getExtras();
-        String jsonData = bundle.getString("gitReference");
-
         listView = (ListView) findViewById(R.id.listView);
 
-        //ArrayList<Command> commands = loadJSONFromAsset(this);
-        //String json = loadJSONFromAsset();
-
-        JSONArray jsonArray = null;
         try {
-            jsonArray = new JSONArray(jsonData);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            is = getApplicationContext().getAssets().open("gitReference.json");
+            commands = JsonUtils.populateGitReferences(JsonUtils.parseJsonToString(is));
+        }
+        catch(Exception e) {
+            System.out.println(e);
         }
 
-        ArrayList<Command> commands = new ArrayList<>();
-
-
-        //JSONObject obj = new JSONObject(json);
-
-        CommandAdapter adapter = new CommandAdapter(this, commands);
+        adapter = new CommandAdapter(this, commands);
         listView.setAdapter(adapter);
     }
 
-    public ArrayList<Command> loadJSONFromAsset(Context context) {
-        ArrayList<Command> json = new ArrayList<>();
-        try {
-            InputStream is = context.getAssets().open("gitReference.json");
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
-
-    public ArrayList<String> populateData(String jsonFileName)
+/*    *//*public ArrayList<String> populateData(String jsonFileName)
     {
         ArrayList<String> returnList = new ArrayList<>();
 
-        String jsonString = ProcessData(jsonFileName);
+        String jsonString = processData(jsonFileName);
         Log.i("JSON", jsonString);
 
         ArrayList<Command> references = JsonUtils.populateGitReferences(jsonString);
@@ -92,10 +65,24 @@ public class MainActivity extends AppCompatActivity {
 
         return returnList;
     }
+*//*
 
-    public String ProcessData(String filename)
+    public ArrayList<Command> populateData(String fileName){
+        ArrayList<String> returnList = new ArrayList<>();
+
+        String jsonString = processData(fileName);
+
+        Log.i("JSON",jsonString );
+
+        ArrayList<Command> references = JsonUtils.populateGitReferences(jsonString);
+
+        return references;
+    }
+
+
+    public String processData(String filename)
     {
-        String jsonString = "";
+        jsonString = "";
         boolean isFilePresent = JsonUtils.isFilePresent(this, filename);
 
         if(isFilePresent)
@@ -126,6 +113,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return jsonString;
-    }
+    }*/
 
 }
