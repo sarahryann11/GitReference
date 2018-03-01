@@ -43,4 +43,8 @@ public class Command {
     public void setSection(String section) {
         this.section = section;
     }
+
+    public String toString() {
+        return section;
+    }
 }

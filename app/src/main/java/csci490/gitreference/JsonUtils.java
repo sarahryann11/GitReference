@@ -53,15 +53,45 @@ public class JsonUtils {
                 JSONObject json_data = jArray.getJSONObject(i);
                 Command commands = new Command();
                 commands.setCommand(json_data.getString("command"));
-                Log.i("JSON", "Adding: " + commands.getCommand());
                 commands.setExample(json_data.getString("example"));
-                Log.i("JSON", "Adding: " + commands.getExample());
                 commands.setExplanation(json_data.getString("explanation"));
-                Log.i("JSON", "Adding: " + commands.getExplanation());
                 commands.setSection(json_data.getString("section"));
-                Log.i("JSON", "Adding: " + commands.getSection());
 
                 data.add(commands);
+            }
+
+        } catch (Exception ex) {
+
+        }
+
+        return data;
+    }
+
+    public static ArrayList<Command> filterGitReferences(String jsonString, String f) {
+        ArrayList<Command> data = new ArrayList<>();
+
+        JSONArray jArray = null;
+        try {
+            // Load json String into a JSONObject
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            // Extract all the "command" JSON objects into a JsonArray
+            jArray = jsonObject.getJSONArray("commands");
+
+            // Extract json objects from JsonArray and store into ArrayList as class objects
+            // filter the content this time though
+            for(int i=0;i<jArray.length();i++){
+                JSONObject json_data = jArray.getJSONObject(i);
+                if (json_data.getString("section").compareTo(f) == 0)
+                {
+                    Command commands = new Command();
+                    commands.setCommand(json_data.getString("command"));
+                    commands.setExample(json_data.getString("example"));
+                    commands.setExplanation(json_data.getString("explanation"));
+                    commands.setSection(json_data.getString("section"));
+
+                    data.add(commands);
+                }
             }
 
         } catch (Exception ex) {

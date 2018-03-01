@@ -7,19 +7,24 @@
         android:id="@+id/command"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="left" />
+        android:textSize="@dimen/command"
+        android:gravity="left"
+        android:padding="@dimen/textPadding"
+        android:textColor="@color/black" />
     <TextView
         android:id="@+id/example"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="left" />
+        android:textSize="@dimen/example"
+        android:gravity="left"
+        android:padding="@dimen/textPadding"
+        android:textColor="@color/black" />
     <TextView
         android:id="@+id/explanation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="left" />
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+        android:gravity="left"
+        android:padding="@dimen/textPadding"/>
 
 </LinearLayout>
